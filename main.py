@@ -1,22 +1,37 @@
 import os
 import requests
+from typing import Optional
 
 
 def get_extension(image_url: str)-> str | None:
     extension: list[str] = ['.png', '.jpg', '.jpg', '.gif', '.svg']
+    # Convert URL to lowercase to handle case insensitivity
+    image_url = image_url.lower()
     for ext in extension:
         if ext in image_url:
             return ext
+        
+    # for ext in extensions:
+    #     if image_url.endswith(ext) or f'{ext}?' in image_url:  # Check if URL ends with an extension or has a query parameter.
+    #         return ext
 
 
-def download_image(image_url: str, name:str, folder: str = None):
+def download_image(image_url: str, name:str, folder:Optional[str] = None):
+    #folder (str, optional): The folder to save the image in. Defaults to None.
+    
     if ext := get_extension(image_url):
         if folder:
-            image_name: str = f'{folder}/{name}{ext}'
+            # Ensure folder exists
+            os.makedirs(folder, exist_ok=True)
+            image_name = os.path.join(folder, f'{name}{ext}')
+            #image_name: str = f'{folder}/{name}{ext}'
         else:
             image_name = f'{name}{ext}'
+
+                # Prepare the folder and filename
+    
     else:
-        raise Exception('Image exxtension could not be found')
+        raise Exception('Image extension could not be found')
     
     #Checking if name already exits
     if os.path.isfile(image_name):
