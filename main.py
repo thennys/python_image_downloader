@@ -21,3 +21,22 @@ def download_image(image_url: str, name:str, folder: str = None):
     #Checking if name already exits
     if os.path.isfile(image_name):
         raise Exception('File name already exits.....')
+    
+
+    #Download Image
+
+    try:
+        image_content: bytes = requests.get(image_url).content
+        with open(image_name, 'wb') as handler:
+            handler.write(image_content)
+            print(f'Downloaded: "{image_name}" successfully!')
+    except Exception as e:
+        print(f'Error: {e}')
+
+
+if __name__ == '__main__':
+    input_url: str = input("Enter Image url: ")
+    input_name: str = input("Enter Image name to save it: ")
+
+    print('Downloading........')
+    download_image(input_url, name=input_name, folder='images')
