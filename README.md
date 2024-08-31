@@ -8,4 +8,3 @@ steps:
 
 
 
-create a list if image urls, loop through them while automaically give them names and download them
